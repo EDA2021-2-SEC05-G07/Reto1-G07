@@ -38,13 +38,25 @@ def printMenu():
     print("Bienvenido")
     print("1 - Cargar información en el catálogo")
     print("2 - Listar cronológicamente los artistas")
-    print("2 - Listar cronológicamente las adquisiones")
+    print("3 - Listar cronológicamente las adquisiones")
     print("4 - Clasificar las obras de un artista por técnica")
     print("5 - Clasificar las obras por la nacionalidad de sus creadores")
     print("6 - Transportar obras de un departamento")
     print("7 - Proponer una nueva exposición en el museo")
 
 catalog = None
+
+def initDatos():
+    return controller.initDatos()
+
+def cargarDatos(catalog):
+    return controller.cargarDatos(catalog)
+
+def artistasCro(catalog):
+    return controller.getartistasCro()
+
+def obrasCro(catalog):
+    return controller.getobrasCro()
 
 """
 Menu principal
@@ -54,8 +66,16 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
+        catalog= initDatos()
+        print('Numero de artistas: '+ str(lt.size(catalog['Display Name'])))
+        print('Numero de obras: '+ str(lt.size(catalog['Title'])))
+        print('Ultimos 3 elementos del archivo artistas: '+ str('buscar funcion para sacar los ultimos 3'))
+        print('Ultimos 3 elementos del archivo obras: '+ str('buscar funcion para sacar los ultimos 3'))
 
     elif int(inputs[0]) == 2:
+        print(artistasCro(catalog))
+    elif int(inputs[0]) == 3:
+        print(obrasCro(catalog))
         pass
 
     else:

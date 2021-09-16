@@ -28,12 +28,30 @@
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import mergesort as mg
 assert cf
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
+def cargarDatos():
+    catalog={'Artists': None, 'ArtWorks': None}
+
+    catalog['Artists']= lt.newlist()
+    catalog['Artwors']= lt.newlist('ARRAY_LIST', "llama funcion para comparar")
+
+    return catalog
+
+def addArtist(catalog, artist):
+    info= artist.split(sep=',')
+    ar= artist['Display Name'], artist['Gender'], artist['Nationality'], artist['Begin Date']
+    lt.addLast(catalog['Artists'], ar)
+
+def addArtwork(catalog, artwork):
+    at= artwork['Medium'], artwork['Title']
+    lt.addLast(catalog['Artworks'],at)
+
 
 # Construccion de modelos
 
@@ -46,3 +64,32 @@ los mismos.
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
+
+def orgartistasCro(catalog, artist):
+    datelist=lt.newlist()
+    namelist=lt.newlist()
+    for artista in catalog['Artist']:
+        fecha=artist['Begin Date']
+        lt.addLast(datelist,fecha)
+    ordenado= mg.sort(datelist)
+    for fecha in ordenado:
+        if fecha == catalog['Artist']['Begin Date']:
+            lt.addLast(namelist, catalog['Artist']['Display Name'])
+    
+    return namelist
+
+def orgobrasCro(catalog, artwork):
+    datelist=lt.newlist()
+    artworklist=lt.newlist()
+    for artista in catalog['Artwork']:
+        fecha=artwork['Date']
+        lt.addLast(datelist,fecha)
+    ordenado= mg.sort(datelist)
+    for fecha in ordenado:
+        if fecha == catalog['Artwork']['Date']:
+            lt.addLast(artworklist, catalog['Artwork']['Title'])
+    
+    return artworklist
+
+
+    

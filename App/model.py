@@ -35,22 +35,19 @@ assert cf
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
-def cargarDatos():
-    catalog={'Artists': None, 'ArtWorks': None}
+def iniciarDatos():
+    catalog={'Artists': None, 'Artworks': None}
 
-    catalog['Artists']= lt.newlist()
-    catalog['Artwors']= lt.newlist('ARRAY_LIST', "llama funcion para comparar")
+    catalog['Artists']= lt.newList()
+    catalog['Artworks']= lt.newList()
 
     return catalog
 
 def addArtist(catalog, artist):
-    info= artist.split(sep=',')
-    ar= artist['Display Name'], artist['Gender'], artist['Nationality'], artist['Begin Date']
-    lt.addLast(catalog['Artists'], ar)
+    lt.addLast(catalog['Artists'], artist)
 
 def addArtwork(catalog, artwork):
-    at= artwork['Medium'], artwork['Title']
-    lt.addLast(catalog['Artworks'],at)
+    lt.addLast(catalog['Artworks'],artwork)
 
 
 # Construccion de modelos

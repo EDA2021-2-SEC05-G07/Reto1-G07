@@ -88,9 +88,7 @@ def orgobrasCro(catalog, artwork):
     
     return artworklist
 
-def tecnicaObras(catalog, nombre):
-    cantidadobras=0
-    tecnicas={}
+def enconID(catalog, nombre):
     i=0
     f=len(catalog['Artists']-1)
     pos=-1
@@ -105,23 +103,41 @@ def tecnicaObras(catalog, nombre):
         else:
             i=m+1
     encontrarid= catalog['Artist'][pos]['Constituent ID']
+    return encontrarid
+def tecnicasartista(catalog, encontrarid):
+    cantidadobras=0
+    tecnicas={}
     for obra in catalog['Artworks']:
-        if catalog['Artworks']['Constituent ID'] == encontrarid:
+        if obra['Constituent ID'] == encontrarid:
             cantidadobras+=1
-            tecnica= catalog['Artworks']['Medium']
+            tecnica= obra['Medium']
             encontrartecnica=False
             while encontrartecnica == False:
-                if lt.isPresent(tecnicas, tecnica):
+                if tecnica in tecnicas:
+                    lt.addLast(tecnicas[tecnica],obra['Title'])
                     encontrartecnica= True
                 else:
-                    lt.addLast(tecnicas,tecnica)
+                    tecnicas[tecnica]=[]
+                    lt.addLast(tecnicas[tecnica],obra['Title'])
                     encontrartecnica= True
+    return (cantidadobras, tecnicas)
+def cantidadtecnicas(tecnicas):
+    totalTecni= lt.size(tecnicas)
+    return totalTecni
+def tecnimasusada(tecnicas):
+    mayor=0
     for categoria in tecnicas:
-        size= categoria.size()
-        mayor= 0
-
+        size= lt.size(categoria)
         if size > mayor:
             mayor= size
             masusada= tecnicas['categoria']
+    return masusada
+def listaObras(catalog, masusada, tecnicas):
+    for obra in catalog['Artworks']:
+        if obra['Title'] in tecnicas[masusada]:
+            x=[obra['Title'], obra['Date'], obra['Medium'], obra['Dimensions']]
+            obras=[]
+            lt.addLast(obras,x)
+    return obras
 
     

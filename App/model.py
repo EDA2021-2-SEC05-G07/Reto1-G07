@@ -65,12 +65,12 @@ def addArtwork(catalog, artwork):
 def orgartistasCro(catalog, artist):
     datelist=lt.newlist()
     namelist=lt.newlist()
-    for artista in catalog['Artist']:
+    for artista in catalog['Artists']:
         fecha=artist['Begin Date']
         lt.addLast(datelist,fecha)
     ordenado= mg.sort(datelist)
     for fecha in ordenado:
-        if fecha == catalog['Artist']['Begin Date']:
+        if fecha == catalog['Artists']['Begin Date']:
             lt.addLast(namelist, catalog['Artist']['Display Name'])
     
     return namelist
@@ -78,15 +78,50 @@ def orgartistasCro(catalog, artist):
 def orgobrasCro(catalog, artwork):
     datelist=lt.newlist()
     artworklist=lt.newlist()
-    for artista in catalog['Artwork']:
+    for artista in catalog['Artworks']:
         fecha=artwork['Date']
         lt.addLast(datelist,fecha)
     ordenado= mg.sort(datelist)
     for fecha in ordenado:
-        if fecha == catalog['Artwork']['Date']:
-            lt.addLast(artworklist, catalog['Artwork']['Title'])
+        if fecha == catalog['Artworks']['Date']:
+            lt.addLast(artworklist, catalog['Artworks']['Title'])
     
     return artworklist
 
+def tecnicaObras(catalog, nombre):
+    cantidadobras=0
+    tecnicas={}
+    i=0
+    f=len(catalog['Artists']-1)
+    pos=-1
+    id= False
+    while i <= f and id == False:
+        m=(i+f)//2
+        if catalog['Artists'][m]== nombre:
+            pos=m
+            id=True
+        elif catalog['Artists'][m] > nombre:
+            f=m-1
+        else:
+            i=m+1
+    encontrarid= catalog['Artist'][pos]['Constituent ID']
+    for obra in catalog['Artworks']:
+        if catalog['Artworks']['Constituent ID'] == encontrarid:
+            cantidadobras+=1
+            tecnica= catalog['Artworks']['Medium']
+            encontrartecnica=False
+            while encontrartecnica == False:
+                if lt.isPresent(tecnicas, tecnica):
+                    encontrartecnica= True
+                else:
+                    lt.addLast(tecnicas,tecnica)
+                    encontrartecnica= True
+    for categoria in tecnicas:
+        size= categoria.size()
+        mayor= 0
+
+        if size > mayor:
+            mayor= size
+            masusada= tecnicas['categoria']
 
     

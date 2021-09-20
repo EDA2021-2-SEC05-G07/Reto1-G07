@@ -160,6 +160,6 @@ def obrasnacionalidad(catalog, encontrarid):
                    # encontrartecnica= True
     return (cantidadnacionalidad, lst_obras_na)
 #hay que ordenarlas
-def listanacionalidad(catalog, top10na):
-    for obra in catalog['Artworks']:
-        if obra['Title'] in 
+#def listanacionalidad(catalog, top10na):
+ #   for obra in catalog['Artworks']:
+  #      if obra['Title'] in 

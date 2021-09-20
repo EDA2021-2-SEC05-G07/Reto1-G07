@@ -124,13 +124,15 @@ def tecnicasartista(catalog, encontrarid):
 def cantidadtecnicas(tecnicas):
     totalTecni= lt.size(tecnicas)
     return totalTecni
-def tecnimasusada(tecnicas):
+def tecnimasusada(tecnicas:dict):
     mayor=0
     for categoria in tecnicas:
         size= lt.size(categoria)
         if size > mayor:
             mayor= size
-            masusada= tecnicas['categoria']
+            for key in tecnicas.keys():
+                if key == tecnicas['categoria']:
+                    masusada = key
     return masusada
 def listaObras(catalog, masusada, tecnicas):
     for obra in catalog['Artworks']:

@@ -69,11 +69,12 @@ while True:
         catalog= initDatos()
         print('-----------------------------------------')
         cargarDatos(catalog)
+       
         print('-----------------------------------------')
-        print('Numero de artistas: '+ str(lt.size(catalog['Artists']['Display Name'])))
-        print('Numero de obras: '+ str(lt.size(catalog['Artworks']['Title'])))
-        print('Ultimos 3 elementos del archivo artistas: '+ str(lt.subList(catalog['Artists',-1,3])))
-        print('Ultimos 3 elementos del archivo obras: '+ str(lt.subList(catalog['Artworks',-1,3])))
+        print('Numero de artistas: '+ str(lt.size(catalog['Artists'])))
+        print('Numero de obras: '+ str(lt.size(catalog['Artworks'])))
+        print('Ultimos 3 elementos del archivo artistas: '+ str(lt.subList(catalog['Artists'],-1,3)))
+        print('Ultimos 3 elementos del archivo obras: '+ str(lt.subList(catalog['Artworks'],-1,3)))
 
     elif int(inputs[0]) == 2:
         print(artistasCro(catalog))

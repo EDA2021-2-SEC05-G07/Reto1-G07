@@ -142,4 +142,24 @@ def listaObras(catalog, masusada, tecnicas):
             lt.addLast(obras,x)
     return obras
 
-    
+def obrasnacionalidad(catalog, encontrarid):
+    cantidadnacionalidad = 0
+    lst_obras_na = {}
+    for obra in catalog['Artworks']:
+        if obra['Constituent ID'] == encontrarid:
+            cantidadnacionalidad += 1
+            nacionalidad = obra['Nationality']
+            #encontrartecnica=False
+           # while encontrartecnica == False:
+            if nacionalidad in lst_obras_na:
+                lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
+                  #  encontrartecnica= True
+            else:
+                lst_obras_na[nacionalidad]=[]
+                lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
+                   # encontrartecnica= True
+    return (cantidadnacionalidad, lst_obras_na)
+#hay que ordenarlas
+def listanacionalidad(catalog, top10na):
+    for obra in catalog['Artworks']:
+        if obra['Title'] in 

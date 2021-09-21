@@ -104,6 +104,7 @@ def enconID(catalog, nombre):
             i=m+1
     encontrarid= catalog['Artist'][pos]['Constituent ID']
     return encontrarid
+    
 def tecnicasartista(catalog, encontrarid):
     cantidadobras=0
     tecnicas={}
@@ -117,9 +118,11 @@ def tecnicasartista(catalog, encontrarid):
                 tecnicas[tecnica]=[]
                 lt.addLast(tecnicas[tecnica],obra['Title'])
     return (cantidadobras, tecnicas)
+
 def cantidadtecnicas(tecnicas):
     totalTecni= lt.size(tecnicas)
     return totalTecni
+
 def tecnimasusada(tecnicas:dict):
     mayor=0
     for categoria in tecnicas:
@@ -130,6 +133,7 @@ def tecnimasusada(tecnicas:dict):
                 if key == tecnicas['categoria']:
                     masusada = key
     return masusada
+
 def listaObras(catalog, masusada, tecnicas):
     for obra in catalog['Artworks']:
         if obra['Title'] in tecnicas[masusada]:
@@ -141,17 +145,40 @@ def listaObras(catalog, masusada, tecnicas):
 def obrasnacionalidad(catalog, encontrarid):
     cantidadnacionalidad = 0
     lst_obras_na = {}
+    #toca pasar ese diccionario a lista pq afecta las lineas 150, 154 de model.
     for obra in catalog['Artworks']:
         if obra['Constituent ID'] == encontrarid:
             cantidadnacionalidad += 1
             nacionalidad = obra['Nationality']
             if nacionalidad in lst_obras_na:
                 lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
+                #creo que el addLast no sirve porque lst_obras_na es un diccionario vacio
             else:
                 lst_obras_na[nacionalidad]=[]
                 lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
     return (cantidadnacionalidad, lst_obras_na)
-#hay que ordenarlas
-#def listanacionalidad(catalog, top10na):
- #   for obra in catalog['Artworks']:
-  #      if obra['Title'] in 
+
+def lista_nacionalidades(lst_obras_na):
+    mayor=0
+    top10= 0
+    lst_nacio_ord = lt.newList
+    for obra in lst_obras_na:
+        size= lt.size(obra)
+        if size > mayor:
+            mayor= size
+            while top10 <= 10:
+                key = lst_obras_na.keys()
+                if key == lst_obras_na['Nationality']:
+                    nacionalidad_mas_repetida = key
+                    top10+= 1
+                    lst_top10_final = lt.addLast(lst_nacio_ord,nacionalidad_mas_repetida)
+    return lst_top10_final
+
+def nacio_mayor_obras(catalog, lst_top10_final, lst_obras_na):
+    for obra in catalog['Artworks']:
+        if obra['Title'] in lst_obras_na[lst_top10_final]:
+            #no estoy segura si quedo bien por lo que ambas son listas
+            x=[obra['Title'], obra['Date'], obra['Medium'], obra['Dimensions'],  obra['Consituent ID']]
+            obras_na=[]
+            lt.addLast(obras_na,x)
+    return obras_na

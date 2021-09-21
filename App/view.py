@@ -73,8 +73,10 @@ while True:
         print('-----------------------------------------')
         print('Numero de artistas: '+ str(len(catalog['Artists'])))
         print('Numero de obras: '+ str(len(catalog['Artworks'])))
-        print('Ultimos 3 elementos del archivo artistas: '+ str(lt.subList(catalog['Artists'],-1,3)))
-        print('Ultimos 3 elementos del archivo obras: '+ str(lt.subList(catalog['Artworks'],-1,3)))
+        print('Ultimos 3 elementos del archivo artistas: '+ str(lt.getElement(catalog['Artists'], len(catalog['Artists'])-1)))
+        print('##################################')
+        print(len(catalog['Artists'])-1)
+        print('Ultimos 3 elementos del archivo obras: '+ str(lt.subList(catalog['Artworks'],len(catalog['Artworks']))-1,3))
 
     elif int(inputs[0]) == 2:
         print(artistasCro(catalog))

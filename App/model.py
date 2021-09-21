@@ -111,15 +111,11 @@ def tecnicasartista(catalog, encontrarid):
         if obra['Constituent ID'] == encontrarid:
             cantidadobras+=1
             tecnica= obra['Medium']
-            encontrartecnica=False
-            while encontrartecnica == False:
-                if tecnica in tecnicas:
-                    lt.addLast(tecnicas[tecnica],obra['Title'])
-                    encontrartecnica= True
-                else:
-                    tecnicas[tecnica]=[]
-                    lt.addLast(tecnicas[tecnica],obra['Title'])
-                    encontrartecnica= True
+            if tecnica in tecnicas:
+                lt.addLast(tecnicas[tecnica],obra['Title'])
+            else:
+                tecnicas[tecnica]=[]
+                lt.addLast(tecnicas[tecnica],obra['Title'])
     return (cantidadobras, tecnicas)
 def cantidadtecnicas(tecnicas):
     totalTecni= lt.size(tecnicas)
@@ -149,15 +145,11 @@ def obrasnacionalidad(catalog, encontrarid):
         if obra['Constituent ID'] == encontrarid:
             cantidadnacionalidad += 1
             nacionalidad = obra['Nationality']
-            #encontrartecnica=False
-           # while encontrartecnica == False:
             if nacionalidad in lst_obras_na:
                 lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
-                  #  encontrartecnica= True
             else:
                 lst_obras_na[nacionalidad]=[]
                 lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
-                   # encontrartecnica= True
     return (cantidadnacionalidad, lst_obras_na)
 #hay que ordenarlas
 #def listanacionalidad(catalog, top10na):

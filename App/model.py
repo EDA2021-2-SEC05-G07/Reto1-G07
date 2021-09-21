@@ -65,11 +65,11 @@ def addArtwork(catalog, artwork):
 def orgartistasCro(catalog, artist):
     datelist=lt.newlist()
     namelist=lt.newlist()
-    for artista in catalog['Artists']:
+    for artista in lt.iterator(catalog['Artists']):
         fecha=artist['Begin Date']
         lt.addLast(datelist,fecha)
     ordenado= mg.sort(datelist)
-    for fecha in ordenado:
+    for fecha in lt.iterator(ordenado):
         if fecha == catalog['Artists']['Begin Date']:
             lt.addLast(namelist, catalog['Artist']['Display Name'])
     
@@ -78,11 +78,11 @@ def orgartistasCro(catalog, artist):
 def orgobrasCro(catalog, artwork):
     datelist=lt.newlist()
     artworklist=lt.newlist()
-    for artista in catalog['Artworks']:
+    for artista in lt.iterator(catalog['Artworks']):
         fecha=artwork['Date']
         lt.addLast(datelist,fecha)
     ordenado= mg.sort(datelist)
-    for fecha in ordenado:
+    for fecha in lt.iterator(ordenado):
         if fecha == catalog['Artworks']['Date']:
             lt.addLast(artworklist, catalog['Artworks']['Title'])
     
@@ -108,14 +108,14 @@ def enconID(catalog, nombre):
 def tecnicasartista(catalog, encontrarid):
     cantidadobras=0
     tecnicas={}
-    for obra in catalog['Artworks']:
+    for obra in lt.iterator(catalog['Artworks']):
         if obra['Constituent ID'] == encontrarid:
             cantidadobras+=1
             tecnica= obra['Medium']
             if tecnica in tecnicas:
                 lt.addLast(tecnicas[tecnica],obra['Title'])
             else:
-                tecnicas[tecnica]=[]
+                tecnicas[tecnica]=lt.newList()
                 lt.addLast(tecnicas[tecnica],obra['Title'])
     return (cantidadobras, tecnicas)
 
@@ -135,10 +135,10 @@ def tecnimasusada(tecnicas:dict):
     return masusada
 
 def listaObras(catalog, masusada, tecnicas):
-    for obra in catalog['Artworks']:
+    for obra in lt.iterator(catalog['Artworks']):
         if obra['Title'] in tecnicas[masusada]:
             x=[obra['Title'], obra['Date'], obra['Medium'], obra['Dimensions']]
-            obras=[]
+            obras=lt.newList()
             lt.addLast(obras,x)
     return obras
 
@@ -146,7 +146,7 @@ def obrasnacionalidad(catalog, encontrarid):
     cantidadnacionalidad = 0
     lst_obras_na = {}
     #toca pasar ese diccionario a lista pq afecta las lineas 150, 154 de model.
-    for obra in catalog['Artworks']:
+    for obra in lt.iterator(catalog['Artworks']):
         if obra['Constituent ID'] == encontrarid:
             cantidadnacionalidad += 1
             nacionalidad = obra['Nationality']
@@ -154,7 +154,7 @@ def obrasnacionalidad(catalog, encontrarid):
                 lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
                 #creo que el addLast no sirve porque lst_obras_na es un diccionario vacio
             else:
-                lst_obras_na[nacionalidad]=[]
+                lst_obras_na[nacionalidad]=lt.newList()
                 lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
     return (cantidadnacionalidad, lst_obras_na)
 
@@ -175,10 +175,24 @@ def lista_nacionalidades(lst_obras_na):
     return lst_top10_final
 
 def nacio_mayor_obras(catalog, lst_top10_final, lst_obras_na):
-    for obra in catalog['Artworks']:
+    for obra in lt.iterator(catalog['Artworks']):
         if obra['Title'] in lst_obras_na[lst_top10_final]:
             #no estoy segura si quedo bien por lo que ambas son listas
             x=[obra['Title'], obra['Date'], obra['Medium'], obra['Dimensions'],  obra['Consituent ID']]
             obras_na=[]
             lt.addLast(obras_na,x)
     return obras_na
+
+def obrasDepartamento(departamento, catalog):
+    lista= lt.newList()
+    for obra in lt.iterator(catalog['Artworks']):
+        if catalog['Artworks']['Department'] == departamento:
+            lt.addLast(lista, obra)
+    return lista
+def ordenar(o1,o2):
+    return o1['Date']<o1['Date']
+
+lista=sa.sort(lista, ordenar)
+
+def transportarObras(lista):
+    totalObras= lt.size(lista)

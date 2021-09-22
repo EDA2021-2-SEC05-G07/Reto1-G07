@@ -190,7 +190,7 @@ def obrasDepartamento(departamento, catalog):
             lt.addLast(lista, obra)
     return lista
 def ordenar(o1,o2):
-    return o1['Date']<o1['Date']
+    return o1['Date']<o2['Date']
 
 lista=sa.sort(lista, ordenar)
 

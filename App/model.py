@@ -77,19 +77,46 @@ def ultimos3(ordenada):
     return lt.subList(ordenada, (lt.size(ordenada))-3, 3)
 
 #Requerimiento 2
+def compararIDayo(catalog, id):
+    #en id entraria el constituent ID del artworks
+    for artist in lt.iterator(catalog['Artist']):
+        if id == artist['ConstituentID']:
+            nomArtista = artist['DisplayName']
+            return nomArtista
 
-def orgobrasCro(catalog, artwork):
-    datelist=lt.newlist()
-    artworklist=lt.newlist()
-    for artista in lt.iterator(catalog['Artworks']):
-        fecha=artwork['Date']
-        lt.addLast(datelist,fecha)
-    ordenado= mg.sort(datelist)
-    for fecha in lt.iterator(ordenado):
-        if fecha == catalog['Artworks']['Date']:
-            lt.addLast(artworklist, catalog['Artworks']['Title'])
-    
-    return artworklist
+def orgObrasCro(catalog, inicial, final):
+    obras =lt.newlist()
+    conteoObras = 0
+    for obra in lt.iterator(catalog['Artwoks']):        
+        if obra['DateAcquired']>= inicial and obra['DateAcquired']<= final:
+            conteoObras += 1
+            informacion= lt.newList()
+            lt.addLast(informacion, obra['Title'])
+            lt.addLast(informacion, obra[compararIDayo(obra['ConstituentID'])])
+            lt.addLast(informacion, obra['Date'])
+            lt.addLast(informacion, obra['DateAcquired'])
+            lt.addLast(informacion, obra['Medium'])
+            lt.addLast(informacion, obra['Dimensions'])
+            lt.addLast(obras,informacion)
+    tupla = (obras, conteoObras)
+    """
+    obras->tupla[0], obras es la lista de las obras en el rango
+    conteoObras->tupla[1], conteoObras es el numero de obras en el rango
+    """
+    return tupla
+
+def ordenarObras(obras):
+    ordenada= ordenarlista(obras)
+    return ordenada
+
+def numPurchase(catalog):
+    conteoPu = 0
+    for obra in lt.iterator(catalog['Artworks']):
+        if obra['CreditLine'] == 'Purchase':
+            conteoPu += 1
+        return conteoPu
+#para sacar las primeras y ultimas 3 obras se puede usar las funciones
+#primeros3 y ultimos3 de req1
 
 #Requerimiento 3
 
@@ -109,7 +136,6 @@ def enconID(catalog, nombre):
             i=m+1
     encontrarid= catalog['Artist'][pos]['Constituent ID']
     return encontrarid
-    
 def tecnicasartista(catalog, encontrarid):
     cantidadobras=0
     tecnicas={}

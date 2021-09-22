@@ -71,12 +71,20 @@ while True:
         cargarDatos(catalog)
        
         print('-----------------------------------------')
-        print('Numero de artistas: '+ str(len(catalog['Artists'])))
-        print('Numero de obras: '+ str(len(catalog['Artworks'])))
-        print('Ultimos 3 elementos del archivo artistas: '+ str(lt.getElement(catalog['Artists'], len(catalog['Artists'])-1)))
+        print('Numero de artistas: '+ str(lt.size(catalog['Artists'])))
+        print('Numero de obras: '+ str(lt.size(catalog['Artworks'])))
+        print('Ultimos 3 elementos del archivo artistas: '+ str(lt.subList(catalog['Artists'],lt.size(catalog['Artists'])-2,3)))
         print('##################################')
-        print(len(catalog['Artists'])-1)
-        print('Ultimos 3 elementos del archivo obras: '+ str(lt.subList(catalog['Artworks'],len(catalog['Artworks']))-1,3))
+        lista=lt.subList(catalog['Artists'],lt.size(catalog['Artists'])-2,3)
+        for artista in lt.iterator(lista):
+            print('----------------------------------------------------')
+            print (artista)
+        print('Ultimos 3 elementos del archivo obras: '+ str(lt.subList(catalog['Artworks'],lt.size(catalog['Artworks'])-2,3)))
+        print('##################################')
+        lista=lt.subList(catalog['Artworks'],lt.size(catalog['Artworks'])-2,3)
+        for artista in lt.iterator(lista):
+            print('----------------------------------------------------')
+            print (artista)
 
     elif int(inputs[0]) == 2:
         print(artistasCro(catalog))

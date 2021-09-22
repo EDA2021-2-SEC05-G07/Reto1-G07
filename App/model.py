@@ -85,7 +85,7 @@ def compararIDayo(catalog, id):
             return nomArtista
 
 def orgObrasCro(catalog, inicial, final):
-    obras =lt.newlist()
+    obras =lt.newList()
     conteoObras = 0
     for obra in lt.iterator(catalog['Artwoks']):        
         if obra['DateAcquired']>= inicial and obra['DateAcquired']<= final:

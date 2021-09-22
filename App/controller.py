@@ -48,7 +48,7 @@ def loadArtist(catalog):
         model.addArtist(catalog, artist)
 
 def loadArtworks(catalog):
-    artworksfile= cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
+    artworksfile= cf.data_dir + 'MoMA/Artworks-utf8-prueba.csv'
     input_file= csv.DictReader(open(artworksfile, encoding='utf-8'))
     for artwork in input_file:
         model.addArtwork(catalog, artwork)

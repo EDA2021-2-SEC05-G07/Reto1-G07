@@ -25,6 +25,7 @@
  """
 
 
+from DISClib.DataStructures.arraylist import addLast
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -35,6 +36,7 @@ assert cf
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
+#Carga de datos
 def iniciarDatos():
     catalog={'Artists': None, 'Artworks': None}
 
@@ -49,31 +51,32 @@ def addArtist(catalog, artist):
 def addArtwork(catalog, artwork):
     lt.addLast(catalog['Artworks'],artwork)
 
+#Requerimiento 1
 
-# Construccion de modelos
-
-# Funciones para agregar informacion al catalogo
-
-# Funciones para creacion de datos
-
-# Funciones de consulta
-
-# Funciones utilizadas para comparar elementos dentro de una lista
-
-# Funciones de ordenamiento
-
-def orgartistasCro(catalog, artist):
-    datelist=lt.newlist()
-    namelist=lt.newlist()
+def orgartistasCro(catalog, inicial, final):
+    artistas=lt.newlist()
     for artista in lt.iterator(catalog['Artists']):
-        fecha=artist['Begin Date']
-        lt.addLast(datelist,fecha)
-    ordenado= mg.sort(datelist)
-    for fecha in lt.iterator(ordenado):
-        if fecha == catalog['Artists']['Begin Date']:
-            lt.addLast(namelist, catalog['Artist']['Display Name'])
-    
-    return namelist
+        if artista['BeginDate']>= inicial and artista['BeginDate']<= final:
+            informacion= lt.newList()
+            lt.addLast(informacion, artista['DisplayName'])
+            lt.addLast(informacion, artista['BeginDate'])
+            lt.addLast(informacion, artista['EndDate'])
+            lt.addLast(informacion, artista['Nationality'])
+            lt.addLast(informacion, artista['Gender'])
+            lt.addLast(artistas,informacion)
+    return artistas
+
+def ordenarArtistas(artistas):
+    ordenada= ordenarlista(artistas, ordenar)
+    return ordenada
+
+def primeros3(ordenada):
+    return lt.subList(ordenada, 1, 3)
+
+def ultimos3(ordenada):
+    return lt.subList(ordenada, (lt.size(ordenada))-3, 3)
+
+#Requerimiento 2
 
 def orgobrasCro(catalog, artwork):
     datelist=lt.newlist()
@@ -87,6 +90,8 @@ def orgobrasCro(catalog, artwork):
             lt.addLast(artworklist, catalog['Artworks']['Title'])
     
     return artworklist
+
+#Requerimiento 3
 
 def enconID(catalog, nombre):
     i=0
@@ -137,16 +142,22 @@ def tecnimasusada(tecnicas:dict):
 def listaObras(catalog, masusada, tecnicas):
     for obra in lt.iterator(catalog['Artworks']):
         if obra['Title'] in tecnicas[masusada]:
-            x=[obra['Title'], obra['Date'], obra['Medium'], obra['Dimensions']]
+            info=lt.newList()
+            lt.addLast(info, obra['Title'])
+            lt.addLast(info, obra['Date'])
+            lt.addLast(info, obra['Medium'])
+            lt.addLast(info, obra['Dimensions'])
             obras=lt.newList()
-            lt.addLast(obras,x)
+            lt.addLast(obras,info)
     return obras
+
+#Requerimiento 4
 
 def obrasnacionalidad(catalog, encontrarid):
     lst_obras_na = {}
     #toca pasar ese diccionario a lista pq afecta las lineas 150, 154 de model.
     for obra in lt.iterator(catalog['Artworks']):
-        if obra['Constituent ID'] == encontrarid:
+        
             nacionalidad = obra['Nationality']
             if nacionalidad in lst_obras_na:
                 lst_obras_na[nacionalidad] = obra['Title']
@@ -156,6 +167,13 @@ def obrasnacionalidad(catalog, encontrarid):
                 lst_obras_na[nacionalidad]=lt.newList()
                 lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
     return (lst_obras_na)
+
+def nombreArtista(catalog, id):
+    encontro= False
+    while encontro == False:
+        if id == catalog['Artists']['ConstituentID']:
+            nombre= catalog['Artists']['DisplayName']
+    return nombre
 
 def lista_nacionalidades(lst_obras_na):
     mayor=0
@@ -182,16 +200,105 @@ def nacio_mayor_obras(catalog, lst_top10_final, lst_obras_na):
             lt.addLast(obras_na,x)
     return obras_na
 
+#Requerimiento 5 
+
 def obrasDepartamento(departamento, catalog):
     lista= lt.newList()
     for obra in lt.iterator(catalog['Artworks']):
         if catalog['Artworks']['Department'] == departamento:
             lt.addLast(lista, obra)
     return lista
-def ordenar(o1,o2):
-    return o1['Date']<o2['Date']
+def ordenar(o1,o2,categoria):
+    return o1[categoria]<o2[categoria]
 
-lista=sa.sort(lista, ordenar)
+def ordenarlista(lista):
+    listaOrdenada=sa.sort(lista, ordenar)
+    return listaOrdenada
 
-def transportarObras(lista):
+def pesototal(lista):
+    peso=0
+    for obra in lt.iterator(lista):
+        pesoObra= int(obra['Weight'])
+        peso+= pesoObra
+    return peso
+
+def cantidadObras(lista):
     totalObras= lt.size(lista)
+    return totalObras
+
+def dictCostos(lista):
+    costoObras={}
+    for obra in lt.iterator(lista):
+        altura=obra['Height']
+        longitud=obra['Length']
+        peso=obra['Weigth']
+        ancho= obra['Width']
+        if (altura== '' or longitud=='') and peso=='':
+            costoObras[obra['Title']]= 48
+        else:
+            mayor=0
+            costos=lt.newList()
+            if longitud != '' and altura!= '':
+                area= (altura*longitud)/100
+                precioArea= 72/area
+                lt.addLast(costos, precioArea)
+                if ancho!='':
+                    volumen= (altura*longitud*ancho)/100
+                    precioVolumen= 72/volumen
+                    lt.addLast(costos, precioVolumen)
+            if peso != '':
+                precioPeso= 72/peso
+                lt.addLast(costos, precioPeso)
+            for precio in lt.iterator(costos):
+                if precio> mayor:
+                    mayor= precio
+            costoObras[obra['Title']]= mayor
+    return costoObras
+
+def costoEstimado(costoObras):
+    suma=sum(costoObras.values())
+    return suma
+
+def obrasMasAntiguas(listaOrdenada, catalog):
+    x= lt.subList(listaOrdenada, (lt.size(listaOrdenada))-5, 5)
+    masAntiguas= lt.newList()
+    for obra in lt.iterator(x):
+        info= lt.newList()
+        lt.addLast(info, obra['Title'])
+        id= obra['ConstituentID']
+        artista=nombreArtista(catalog, id)
+        lt.addLast(info, artista)
+        lt.addLast(info, obra['Classification'])
+        lt.addLast(info, obra['Date'])
+        lt.addLast(info, obra['Medium'])
+        lt.addLast(info, obra['Dimensions'])
+        costotransporte= costoEstimado(listaOrdenada)
+        for llave in costotransporte.keys():
+            if llave == obra['Title']:
+                costo=costotransporte[llave]
+                break
+        lt.addLast(info, costo)
+        lt.addLast(masAntiguas, info)
+    return masAntiguas 
+
+def obrasMasCost(listaOrdenada, catalog):
+    x= lt.subList(listaOrdenada, (lt.size(listaOrdenada))-5, 5)
+    masCost= lt.newList()
+    for obra in lt.iterator(x):
+        info= lt.newList()
+        lt.addLast(info, obra['Title'])
+        id= obra['ConstituentID']
+        artista=nombreArtista(catalog, id)
+        lt.addLast(info, artista)
+        lt.addLast(info, obra['Classification'])
+        lt.addLast(info, obra['Date'])
+        lt.addLast(info, obra['Medium'])
+        lt.addLast(info, obra['Dimensions'])
+        costotransporte= costoEstimado(listaOrdenada)
+        for llave in costotransporte.keys():
+            if llave == obra['Title']:
+                costo=costotransporte[llave]
+                break
+        lt.addLast(info, costo)
+        lt.addLast(masCost, info)
+    return masCost

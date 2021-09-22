@@ -179,20 +179,22 @@ def listaObras(catalog, masusada, tecnicas):
 
 #Requerimiento 4
 
-def obrasnacionalidad(catalog, encontrarid):
+def obrasnacionalidad(catalog):
     lst_obras_na = {}
-    #toca pasar ese diccionario a lista pq afecta las lineas 150, 154 de model.
     for obra in lt.iterator(catalog['Artworks']):
-        
-            nacionalidad = obra['Nationality']
-            if nacionalidad in lst_obras_na:
-                lst_obras_na[nacionalidad] = obra['Title']
-                #lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
-                #creo que el addLast no sirve porque lst_obras_na es un diccionario vacio
-            else:
-                lst_obras_na[nacionalidad]=lt.newList()
-                lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
-    return (lst_obras_na)
+        nacionalidad = obra['Nationality']
+        lst_obras_na[nacionalidad] = ''
+        x= lt.newList
+        lt.addLast(x, obra['Title'])
+        lt.addLast(x, obra['Date'])
+        lt.addLast(x, obra['Medium'])
+        lt.addLast(x, obra['Dimensions'])
+        lt.addLast(x, obra[compararIDayo(obra['ConstituentID'])])
+        if nacionalidad in lst_obras_na:
+                lst_obras_na[nacionalidad] = x
+        else:
+                lst_obras_na[nacionalidad]= x
+    return lst_obras_na
 
 def nombreArtista(catalog, id):
     encontro= False
@@ -200,7 +202,7 @@ def nombreArtista(catalog, id):
         if id == catalog['Artists']['ConstituentID']:
             nombre= catalog['Artists']['DisplayName']
     return nombre
-
+#no se usa
 def lista_nacionalidades(lst_obras_na):
     mayor=0
     top10= 0
@@ -217,14 +219,11 @@ def lista_nacionalidades(lst_obras_na):
                     lst_top10_final = lt.addLast(lst_nacio_ord,nacionalidad_mas_repetida)
     return lst_top10_final
 
-def nacio_mayor_obras(catalog, lst_top10_final, lst_obras_na):
-    for obra in lt.iterator(catalog['Artworks']):
-        if obra['Title'] in lst_obras_na[lst_top10_final]:
-            #no estoy segura si quedo bien por lo que ambas son listas
-            x=[obra['Title'], obra['Date'], obra['Medium'], obra['Dimensions'],  obra['Consituent ID']]
-            obras_na= lt.newList
-            lt.addLast(obras_na,x)
-    return obras_na
+#def nacio_mayor_obras(catalog, lst_top10_final):
+ #   for lt.iterator(catalog['Artworks']):
+  #  return None
+
+    
 
 #Requerimiento 5 
 
@@ -292,7 +291,8 @@ def obrasMasAntiguas(listaOrdenada, catalog):
         info= lt.newList()
         lt.addLast(info, obra['Title'])
         id= obra['ConstituentID']
-        artista=nombreArtista(catalog, id)
+        artista = compararIDayo(id)
+        #artista=nombreArtista(catalog, id)
         lt.addLast(info, artista)
         lt.addLast(info, obra['Classification'])
         lt.addLast(info, obra['Date'])
@@ -314,7 +314,8 @@ def obrasMasCost(listaOrdenada, catalog):
         info= lt.newList()
         lt.addLast(info, obra['Title'])
         id= obra['ConstituentID']
-        artista=nombreArtista(catalog, id)
+        artista = compararIDayo(id)
+        #artista=nombreArtista(catalog, id)
         lt.addLast(info, artista)
         lt.addLast(info, obra['Classification'])
         lt.addLast(info, obra['Date'])

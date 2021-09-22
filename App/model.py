@@ -54,7 +54,7 @@ def addArtwork(catalog, artwork):
 #Requerimiento 1
 
 def orgartistasCro(catalog, inicial, final):
-    artistas=lt.newlist()
+    artistas=lt.newList()
     for artista in lt.iterator(catalog['Artists']):
         if artista['BeginDate']>= inicial and artista['BeginDate']<= final:
             informacion= lt.newList()

@@ -143,20 +143,19 @@ def listaObras(catalog, masusada, tecnicas):
     return obras
 
 def obrasnacionalidad(catalog, encontrarid):
-    cantidadnacionalidad = 0
     lst_obras_na = {}
     #toca pasar ese diccionario a lista pq afecta las lineas 150, 154 de model.
     for obra in lt.iterator(catalog['Artworks']):
         if obra['Constituent ID'] == encontrarid:
-            cantidadnacionalidad += 1
             nacionalidad = obra['Nationality']
             if nacionalidad in lst_obras_na:
-                lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
+                lst_obras_na[nacionalidad] = obra['Title']
+                #lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
                 #creo que el addLast no sirve porque lst_obras_na es un diccionario vacio
             else:
                 lst_obras_na[nacionalidad]=lt.newList()
                 lt.addLast(lst_obras_na[nacionalidad], obra['Title'])
-    return (cantidadnacionalidad, lst_obras_na)
+    return (lst_obras_na)
 
 def lista_nacionalidades(lst_obras_na):
     mayor=0
@@ -179,7 +178,7 @@ def nacio_mayor_obras(catalog, lst_top10_final, lst_obras_na):
         if obra['Title'] in lst_obras_na[lst_top10_final]:
             #no estoy segura si quedo bien por lo que ambas son listas
             x=[obra['Title'], obra['Date'], obra['Medium'], obra['Dimensions'],  obra['Consituent ID']]
-            obras_na=[]
+            obras_na= lt.newList
             lt.addLast(obras_na,x)
     return obras_na
 

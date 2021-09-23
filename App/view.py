@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from App.controller import getprimeros3
 import config as cf
 import sys
 import controller
@@ -74,15 +75,37 @@ while True:
         print('Ultimos 3 elementos del archivo obras: '+ str(lt.subList(catalog['Artworks'],lt.size(catalog['Artworks'])-2,3)))
 
     elif int(inputs[0]) == 2:
-        print(artistasCro(catalog))
+        inicial= input('Ingrese la fecha inicial del rango: ')
+        final= input('Ingrese la fecha final del rango: ')
+        artistas=controller.getorgartistascro(catalog,inicial,final)
+        print('Número total de artistas en el rango: ') + str(artistas[1])
+        ordenada= controller.getordenarArtistas(artistas)
+        print('Primeros 3 artistas del rango cronologico: ') + str(controller.getprimeros3(ordenada))
+        print('Ultimos 3 artistas del rango cronológico: ')+ str(controller.getultimos3(ordenada))
+
     elif int(inputs[0]) == 3:
-        print(obrasCro(catalog))
+        inicial= input('Ingrese la fecha inicial del rango: ')
+        final= input('Ingrese la fecha final del rango: ')
+        print('Número total de obras en el rango cronológico: ')
+        print('Número total de obras adquiridas por compra (“purchase…”)')
+        print('Primeras 3 obras del rango')
+        print('últimas 3 obras del rango)
     elif int(inputs[0]) == 4:
-        print(obrasCro(catalog))
+        nombre=input('Ingrese el nombre de un artista: ')
+        print('Total de obras')
+        print('Total técnicas utilizadas')
+        print('La técnica mas utilizada')
+        print('El listado de las obras de dicha técnica')
     elif int(inputs[0]) == 5:
-        print(obrasCro(catalog))
+        print('Lista de nacionalidades ordenadas por el total de obras de mayor a menor (TOP 10).')
+        print('Información de las obras de la nacionalidad con el mayor numero de obras')
+
     elif int(inputs[0]) == 6:
-        print(obrasCro(catalog))
+        print('Total de obras para transportar')
+        print('Estimado en USD del precio del servicio')
+        print('Peso estimado de las obras')
+        print('Las 5 obras mas antiguas a transportar')
+        print('Las 5 obras mas costosas para transportar')
     
         pass
 

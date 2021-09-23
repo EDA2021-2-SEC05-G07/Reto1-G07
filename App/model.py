@@ -72,10 +72,12 @@ def ordenarArtistas(artistas):
     return ordenada
 
 def primeros3(ordenada):
-    return lt.subList(ordenada, 1, 3)
+    primeros=lt.subList(ordenada, 1, 3)
+    return primeros
 
 def ultimos3(ordenada):
-    return lt.subList(ordenada, (lt.size(ordenada))-2, 3)
+    ultimos=lt.subList(ordenada, (lt.size(ordenada))-2, 3)
+    return ultimos
 
 #Requerimiento 2
 def compararIDayo(catalog, id):
@@ -281,12 +283,12 @@ def listaprecios(costoObras:dict):
         lt.addLast(listafechas, {'costo': costo, 'titulo': llave})
     return listaprecios
 
-def ordenar(o1,o2):
+def ordenar2(o1,o2):
     return o1['costo']<o2['costo']
 
-def ordenarlista(listaprecios):
-    listaOrdenadaprecios=sa.sort(listaprecios, ordenar)
-    return listaOrdenadaprecios
+def ordenarlista2(listaprecios):
+    listaOrdenadaprecios2=sa.sort(listaprecios, ordenar)
+    return listaOrdenadaprecios2
 
 def pesototal(lista):
     peso=0

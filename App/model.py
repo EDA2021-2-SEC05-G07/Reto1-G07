@@ -64,7 +64,8 @@ def orgartistasCro(catalog, inicial, final):
             lt.addLast(informacion, artista['Nationality'])
             lt.addLast(informacion, artista['Gender'])
             lt.addLast(artistas,informacion)
-    return artistas
+    totalArtistas= lt.size(artistas)
+    return (artistas, totalArtistas)
 
 def ordenarArtistas(artistas):
     ordenada= ordenarlista(artistas, ordenar)
@@ -74,7 +75,7 @@ def primeros3(ordenada):
     return lt.subList(ordenada, 1, 3)
 
 def ultimos3(ordenada):
-    return lt.subList(ordenada, (lt.size(ordenada))-3, 3)
+    return lt.subList(ordenada, (lt.size(ordenada))-2, 3)
 
 #Requerimiento 2
 def compararIDayo(catalog, id):
@@ -183,6 +184,30 @@ def obrasnacionalidad(catalog):
     lst_obras_na = {}
     for obra in lt.iterator(catalog['Artworks']):
         nacionalidad = obra['Nationality']
+        if nacionalidad in lst_obras_na:
+            lst_obras_na[nacionalidad]+=1
+        else:
+            lst_obras_na[nacionalidad]=1
+    return lst_obras_na
+
+def Top10(lst_obras_na: dict):
+    valoresNacio=lt.newList()
+    top10=  lt.newList()
+    for nacio in lst_obras_na:
+        lt.addLast(valoresNacio, nacio)
+    valoresOrdenados= sa.sort(valoresNacio)
+    valorestop10= lt.subList(valoresOrdenados, 1, 10)
+    for valor in lt.iterator(valorestop10):
+        for valornacionalidad in lst_obras_na.keys():
+            if lst_obras_na[valornacionalidad] == valor:
+                nacionalidad= valornacionalidad
+                lt.addLast(top10, nacionalidad)
+    return top10
+
+def nacioMasObras(top10, catalog):
+    uno= lt.getElement(top10,1)
+    for artista in catalog['Artists']:
+        if obra['Nationality']
         lst_obras_na[nacionalidad] = ''
         x= lt.newList
         lt.addLast(x, obra['Title'])
@@ -203,7 +228,7 @@ def nombreArtista(catalog, id):
             nombre= catalog['Artists']['DisplayName']
     return nombre
 #no se usa
-def lista_nacionalidades(lst_obras_na):
+def lista_nacionalidades(lst_obras_na: dict):
     mayor=0
     top10= 0
     lst_nacio_ord = lt.newList

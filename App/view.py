@@ -77,6 +77,13 @@ while True:
         print(artistasCro(catalog))
     elif int(inputs[0]) == 3:
         print(obrasCro(catalog))
+    elif int(inputs[0]) == 4:
+        print(obrasCro(catalog))
+    elif int(inputs[0]) == 5:
+        print(obrasCro(catalog))
+    elif int(inputs[0]) == 6:
+        print(obrasCro(catalog))
+    
         pass
 
     else:

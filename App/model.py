@@ -258,12 +258,34 @@ def obrasDepartamento(departamento, catalog):
         if catalog['Artworks']['Department'] == departamento:
             lt.addLast(lista, obra)
     return lista
-def ordenar(o1,o2,categoria):
-    return o1[categoria]<o2[categoria]
+def listafechas(lista):
+    listafechas= lt.newList('SINGLE_LINKED')
+    for obra in lista:
+        f= obra['Date']
+        t= obra['Title']
+        lt.addLast(listafechas, {'fecha': f, 'titulo': t})
+    return listafechas
 
-def ordenarlista(lista):
-    listaOrdenada=sa.sort(lista, ordenar)
+def ordenar(o1,o2):
+    return o1['fecha']<o2['fecha']
+
+def ordenarlista(listafechas):
+    listaOrdenada=sa.sort(listafechas, ordenar)
     return listaOrdenada
+
+def listaprecios(costoObras:dict):
+    listaprecios= lt.newList('SINGLE_LINKED')
+    for llave in costoObras.keys():
+        costo= costoObras[llave]
+        lt.addLast(listafechas, {'costo': costo, 'titulo': llave})
+    return listaprecios
+
+def ordenar(o1,o2):
+    return o1['costo']<o2['costo']
+
+def ordenarlista(listaprecios):
+    listaOrdenadaprecios=sa.sort(listaprecios, ordenar)
+    return listaOrdenadaprecios
 
 def pesototal(lista):
     peso=0
@@ -305,25 +327,24 @@ def dictCostos(lista):
             costoObras[obra['Title']]= mayor
     return costoObras
 
-def costoEstimado(costoObras):
+def costoEstimado(costoObras:dict):
     suma=sum(costoObras.values())
     return suma
 
-def obrasMasAntiguas(listaOrdenada, catalog):
-    x= lt.subList(listaOrdenada, (lt.size(listaOrdenada))-5, 5)
+def obrasMasAntiguas(listaOrdenada, catalog, lista):
+    x= lt.subList(listaOrdenada, (lt.size(listaOrdenada))-4, 5)
     masAntiguas= lt.newList()
     for obra in lt.iterator(x):
         info= lt.newList()
         lt.addLast(info, obra['Title'])
         id= obra['ConstituentID']
-        artista = compararIDayo(id)
-        #artista=nombreArtista(catalog, id)
+        artista = compararIDayo(catalog,id)
         lt.addLast(info, artista)
         lt.addLast(info, obra['Classification'])
         lt.addLast(info, obra['Date'])
         lt.addLast(info, obra['Medium'])
         lt.addLast(info, obra['Dimensions'])
-        costotransporte= costoEstimado(listaOrdenada)
+        costotransporte= dictCostos(lista)
         for llave in costotransporte.keys():
             if llave == obra['Title']:
                 costo=costotransporte[llave]
@@ -332,21 +353,20 @@ def obrasMasAntiguas(listaOrdenada, catalog):
         lt.addLast(masAntiguas, info)
     return masAntiguas 
 
-def obrasMasCost(listaOrdenada, catalog):
-    x= lt.subList(listaOrdenada, (lt.size(listaOrdenada))-5, 5)
+def obrasMasCost(listaOrdenadaprecios, catalog, lista):
+    x= lt.subList(listaOrdenadaprecios, (lt.size(listaOrdenadaprecios))-4, 5)
     masCost= lt.newList()
     for obra in lt.iterator(x):
         info= lt.newList()
         lt.addLast(info, obra['Title'])
         id= obra['ConstituentID']
-        artista = compararIDayo(id)
-        #artista=nombreArtista(catalog, id)
+        artista = compararIDayo(catalog, id)
         lt.addLast(info, artista)
         lt.addLast(info, obra['Classification'])
         lt.addLast(info, obra['Date'])
         lt.addLast(info, obra['Medium'])
         lt.addLast(info, obra['Dimensions'])
-        costotransporte= costoEstimado(listaOrdenada)
+        costotransporte= dictCostos(lista)
         for llave in costotransporte.keys():
             if llave == obra['Title']:
                 costo=costotransporte[llave]

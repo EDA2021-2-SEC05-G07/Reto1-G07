@@ -135,7 +135,7 @@ def enconID(catalog, nombre):
             f=m-1
         else:
             i=m+1
-    encontrarid= catalog['Artist'][pos]['Constituent ID']
+    encontrarid= catalog['Artists'][pos]['Constituent ID']
     return encontrarid
 def tecnicasartista(catalog, encontrarid):
     cantidadobras=0
@@ -179,75 +179,76 @@ def listaObras(catalog, masusada, tecnicas):
     return obras
 
 #Requerimiento 4
-
-def obrasnacionalidad(catalog):
-    lst_obras_na = {}
+def idArtists(catalog):
+    for artist in lt.iterator(catalog['Artists']):
+        id = artist['ConstituentID']
+    return id
+def idyNacio(catalog, id):
+    nacioNombre = {}
+    #en id entraria el constituent ID de artists (return idArtists)
     for obra in lt.iterator(catalog['Artworks']):
-        nacionalidad = obra['Nationality']
-        if nacionalidad in lst_obras_na:
-            lst_obras_na[nacionalidad]+=1
-        else:
-            lst_obras_na[nacionalidad]=1
-    return lst_obras_na
+        if id == obra['ConstituentID']:
+            for artista in lt.iterator(catalog['Artists']):
+                nacionalidad = artista['Nationality']
+            nacioNombre[nacionalidad]= ''
+    return nacioNombre
+def contNacio(catalog, nacioNombre: dict):
+    conteoNa = 0
+    for artist in lt.iterator(catalog['Artists']):
+        nacionalidad = artist['Nationality']
+        if nacionalidad in nacioNombre.keys():
+            conteoNa += 1
+            nacioNombre[nacionalidad] = conteoNa
+    return nacioNombre
 
-def Top10(lst_obras_na: dict):
+def Top10(nacioNombre: dict):
     valoresNacio=lt.newList()
     top10=  lt.newList()
-    for nacio in lst_obras_na:
+    for nacio in nacioNombre:
         lt.addLast(valoresNacio, nacio)
     valoresOrdenados= sa.sort(valoresNacio)
     valorestop10= lt.subList(valoresOrdenados, 1, 10)
     for valor in lt.iterator(valorestop10):
-        for valornacionalidad in lst_obras_na.keys():
-            if lst_obras_na[valornacionalidad] == valor:
+        for valornacionalidad in nacioNombre.keys():
+            if nacioNombre[valornacionalidad] == valor:
                 nacionalidad= valornacionalidad
                 lt.addLast(top10, nacionalidad)
     return top10
 
 def nacioMasObras(top10, catalog):
-    uno= lt.getElement(top10,1)
-    for artista in catalog['Artists']:
-        if obra['Nationality']
-        lst_obras_na[nacionalidad] = ''
-        x= lt.newList
-        lt.addLast(x, obra['Title'])
-        lt.addLast(x, obra['Date'])
-        lt.addLast(x, obra['Medium'])
-        lt.addLast(x, obra['Dimensions'])
-        lt.addLast(x, obra[compararIDayo(obra['ConstituentID'])])
-        if nacionalidad in lst_obras_na:
-                lst_obras_na[nacionalidad] = x
-        else:
-                lst_obras_na[nacionalidad]= x
-    return lst_obras_na
+    uno = lt.getElement(top10,1)
+    for artista in lt.iterator(catalog['Artists']):
+        nacionalidad = artista['Nationality']
+        if nacionalidad == uno:
+            id= artista['ConstituentID']
+            for obra in lt.iterator(catalog['Artworks']):
+                if id == obra['ConstituentID']:
+                    for obra in top10:
+                        x = lt.newList
+                        lt.addLast(x, obra['Title'])
+                        lt.addLast(x, obra['Date'])
+                        lt.addLast(x, obra['Medium'])
+                        lt.addLast(x, obra['Dimensions'])
+                        lt.addLast(x, obra[compararIDayo(obra['ConstituentID'])])
+                        obrasNa = lt.newList
+                        lt.addLast(obrasNa,x)
+    return obrasNa
 
-def nombreArtista(catalog, id):
-    encontro= False
-    while encontro == False:
-        if id == catalog['Artists']['ConstituentID']:
-            nombre= catalog['Artists']['DisplayName']
-    return nombre
-#no se usa
-def lista_nacionalidades(lst_obras_na: dict):
+def lista_nacionalidades(nacioNombre: dict):
     mayor=0
     top10= 0
     lst_nacio_ord = lt.newList
-    for obra in lst_obras_na:
+    for obra in nacioNombre:
         size= lt.size(obra)
         if size > mayor:
             mayor= size
             while top10 <= 10:
-                key = lst_obras_na.keys()
-                if key == lst_obras_na['Nationality']:
+                key = nacioNombre.keys()
+                if key == nacioNombre['Nationality']:
                     nacionalidad_mas_repetida = key
                     top10+= 1
                     lst_top10_final = lt.addLast(lst_nacio_ord,nacionalidad_mas_repetida)
     return lst_top10_final
-
-#def nacio_mayor_obras(catalog, lst_top10_final):
- #   for lt.iterator(catalog['Artworks']):
-  #  return None
-
     
 
 #Requerimiento 5 
@@ -323,7 +324,7 @@ def obrasMasAntiguas(listaOrdenada, catalog):
         lt.addLast(info, obra['Date'])
         lt.addLast(info, obra['Medium'])
         lt.addLast(info, obra['Dimensions'])
-        costotransporte= costoEstimado(listaOrdenada)
+        costotransporte= dict(costoEstimado(listaOrdenada))
         for llave in costotransporte.keys():
             if llave == obra['Title']:
                 costo=costotransporte[llave]
@@ -346,7 +347,7 @@ def obrasMasCost(listaOrdenada, catalog):
         lt.addLast(info, obra['Date'])
         lt.addLast(info, obra['Medium'])
         lt.addLast(info, obra['Dimensions'])
-        costotransporte= costoEstimado(listaOrdenada)
+        costotransporte= dict(costoEstimado(listaOrdenada))
         for llave in costotransporte.keys():
             if llave == obra['Title']:
                 costo=costotransporte[llave]

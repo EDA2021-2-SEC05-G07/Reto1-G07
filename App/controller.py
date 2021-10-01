@@ -70,9 +70,16 @@ def getorgartistascro(catalog, inicial, final):
     artistas= model.orgartistasCro(catalog,inicial,final)
     return artistas
 
+inicial1= 
+final1=
+tupla1= getorgartistascro(catalog, inicial1, final1)
+artistas= tupla1[0]
+
 def getordenarArtistas(artistas):
     ordenada= model.ordenarArtistas(artistas)
     return ordenada
+
+ordenada= getordenarArtistas(artistas)
 
 def getprimeros3(ordenada):
     primeros= model.primeros3(ordenada)
@@ -89,6 +96,12 @@ def getcompararIDayo(catalog, id):
 def getorgObrasCro(catalog, inicial, final):
     tupla= model.orgObrasCro(catalog, inicial, final)
     return tupla
+
+inicial2=
+final2=
+tupla2= getorgObrasCro(catalog, inicial2, final2)
+obras= tupla2[0]
+
 def getordenarObras(obras):
     ordenada= model.ordenarObras(obras)
     return ordenada
@@ -100,15 +113,26 @@ def getnumPurchase(catalog):
 def getenconID(catalog, nombre):
     encontrarid= model.enconID(catalog, nombre)
     return encontrarid
+
+nombre1=
+encontrarid=getenconID(catalog, nombre1)
+
 def gettecnicasartista(catalog, encontrarid):
-    tecnicasyobras= model.tecnicasartista(atalog, encontrarid)
+    tecnicasyobras= model.tecnicasartista(catalog, encontrarid)
     return tecnicasyobras
+
+tupla3= gettecnicasartista(catalog, encontrarid)
+tecnicas= tupla3[0]
+
 def getcantidadtecnicas(tecnicas):
     totalTecni= model.cantidadtecnicas(tecnicas)
     return totalTecni
 def gettecnimasusada(tecnicas:dict):
-    masusada= model.tecnimasusada(tecnicas:dict)
+    masusada= model.tecnimasusada(tecnicas)
     return masusada
+
+masusada= gettecnimasusada(tecnicas)
+
 def getlistaObras(catalog, masusada, tecnicas):
     obras= model.listaObras(catalog, masusada, tecnicas)
     return obras
@@ -120,16 +144,16 @@ def getidyNacio(catalog, id):
     nacioNombre= model.idyNacio(catalog, id)
     return nacioNombre
 def getcontNacio(catalog, nacioNombre: dict):
-    nacioNombre= model.contNacio(catalog, nacioNombre: dict)
+    nacioNombre= model.contNacio(catalog, nacioNombre)
     return nacioNombre
 def getTop10(nacioNombre: dict):
-    top10= model.Top10(nacioNombre: dict)
+    top10= model.Top10(nacioNombre)
     return top10
 def getnacioMasObras(top10, catalog):
     obrasNa= model.nacioMasObras(top10, catalog)
     return obrasNa
 def getlista_nacionalidades(nacioNombre: dict):
-    lst_top10_final=model.lista_nacionalidades(nacioNombre: dict)
+    lst_top10_final=model.lista_nacionalidades(nacioNombre)
     return lst_top10_final
 # Funciones requerimiento 5
 def getobrasDepartamento(departamento, catalog):
@@ -145,20 +169,38 @@ def getordenarlista(listafechas):
     listaordenada=model.ordenarlista(listafechas)
     return listaordenada
 def getlistaprecios(costoObras:dict):
-    listaprecios= model.listaprecios(costoObras:dict)
+    listaprecios= model.listaprecios(costoObras)
     return listaprecios
-def getordenar2(o1,o2):
+def getordenar(o1,o2):
     orden2= model.ordenar2(o1,o2)
     return orden2
-def getordenarlista2(listafechas):
+def getordenarlista(listafechas):
     listaOrdenadaprecios2= model.ordenarlista(listafechas)
     return listaOrdenadaprecios2
 def getlistaprecios(costoObras:dict):
-def getordenar(o1,o2):
-def getordenarlista(listaprecios):
+    listaprecios= model.listaprecios(costoObras)
+    return listaprecios
+def getordenar2(o1,o2):
+    resultado= model.ordenar2(o1,o2)
+    return resultado
+def getordenarlista2(listaprecios):
+    listaOrdenadaprecios2= model.ordenarlista2(listaprecios)
+    return listaOrdenadaprecios2
 def getpesototal(lista):
+    peso= model.pesototal(lista)
+    return peso
 def getcantidadObras(lista):
+    totalObras= model.cantidadObras(lista)
+    return totalObras
 def getdictCostos(lista):
-def getcostoEstimado(costoObras:dict):
+    costoObras= model.dictCostos(lista)
+    return costoObras
+def getcostoEstimado(costoObras):
+    suma= model.costoEstimado(costoObras)
+    return suma
 def getobrasMasAntiguas(listaOrdenada, catalog, lista):
+    masAntiguas= model.obrasMasAntiguas(listaOrdenada, catalog, lista)
+    return masAntiguas
 def getobrasMasCost(listaOrdenadaprecios, catalog, lista):
+    masCost= model.obrasMasCost(listaOrdenadaprecios, catalog, lista)
+    return masCost

@@ -71,16 +71,11 @@ def getorgartistascro(catalog, inicial, final):
     artistas= model.orgartistasCro(catalog,inicial,final)
     return artistas
 
-inicial1= int(input('Escriba la fecha inicial: '))
-final1=int(input('Escriba la fecha final: '))
-tupla1= getorgartistascro(catalog, inicial1, final1)
-artistas= tupla1[0]
 
 def getordenarArtistas(artistas):
     ordenada= model.ordenarArtistas(artistas)
     return ordenada
 
-ordenada= getordenarArtistas(artistas)
 
 def getprimeros3(ordenada):
     primeros= model.primeros3(ordenada)
@@ -98,10 +93,7 @@ def getorgObrasCro(catalog, inicial, final):
     tupla= model.orgObrasCro(catalog, inicial, final)
     return tupla
 
-inicial2=int(input('Escriba la fecha inicial: '))
-final2=int(input('Escriba la fecha final: '))
-tupla2= getorgObrasCro(catalog, inicial2, final2)
-obras= tupla2[0]
+
 
 def getordenarObras(obras):
     ordenada= model.ordenarObras(obras)
@@ -115,15 +107,10 @@ def getenconID(catalog, nombre):
     encontrarid= model.enconID(catalog, nombre)
     return encontrarid
 
-nombre1=input('Escriba el nombre del artista: ')
-encontrarid=getenconID(catalog, nombre1)
 
 def gettecnicasartista(catalog, encontrarid):
     tecnicasyobras= model.tecnicasartista(catalog, encontrarid)
     return tecnicasyobras
-
-tupla3= gettecnicasartista(catalog, encontrarid)
-tecnicas= tupla3[0]
 
 def getcantidadtecnicas(tecnicas):
     totalTecni= model.cantidadtecnicas(tecnicas)
@@ -131,8 +118,6 @@ def getcantidadtecnicas(tecnicas):
 def gettecnimasusada(tecnicas:dict):
     masusada= model.tecnimasusada(tecnicas)
     return masusada
-
-masusada= gettecnimasusada(tecnicas)
 
 def getlistaObras(catalog, masusada, tecnicas):
     obras= model.listaObras(catalog, masusada, tecnicas)
@@ -142,13 +127,13 @@ def getidArtists(catalog):
     id=model.idArtists(catalog)
     return id
 
-id=getidArtists(catalog)
+
 
 def getidyNacio(catalog, id):
     nacioNombre= model.idyNacio(catalog, id)
     return nacioNombre
 
-nacioNombre=getidyNacio(catalog, id)
+
 
 def getcontNacio(catalog, nacioNombre: dict):
     nacioNombre= model.contNacio(catalog, nacioNombre)
@@ -157,7 +142,7 @@ def getTop10(nacioNombre: dict):
     top10= model.Top10(nacioNombre)
     return top10
 
-top10=getTop10(nacioNombre)
+
 
 def getnacioMasObras(top10, catalog):
     obrasNa= model.nacioMasObras(top10, catalog)
@@ -170,14 +155,13 @@ def getobrasDepartamento(departamento, catalog):
     lista= model.obrasDepartamento(departamento, catalog)
     return lista
 
-departamento=input('Escriba el departamento: ')
-lista= getobrasDepartamento(departamento, catalog)
+
 
 def getlistafechas(lista):
     listafechas= model.listafechas(lista)
     return listafechas
 
-listafechas= getlistafechas(lista)
+
 
 def getordenar(o1,o2):
     orden=model.ordenar(o1,o2)
@@ -186,19 +170,17 @@ def getordenarlista(listafechas):
     listaordenada=model.ordenarlista(listafechas)
     return listaordenada
 
-listaordenada= getordenarlista(listafechas)
+
 
 def getdictCostos(lista):
     costoObras= model.dictCostos(lista)
     return costoObras
 
-costoObras=getdictCostos(lista)
 
 def getlistaprecios(costoObras):
     listaprecios= model.listaprecios(costoObras)
     return listaprecios
 
-listaprecios= getlistaprecios(costoObras)
 
 def getordenar(o1,o2):
     orden2= model.ordenar2(o1,o2)
@@ -213,7 +195,6 @@ def getordenarlista2(listaprecios):
     listaOrdenadaprecios2= model.ordenarlista2(listaprecios)
     return listaOrdenadaprecios2
 
-listaOrdenadaprecios2=getordenarlista2(listaprecios)
 
 def getpesototal(lista):
     peso= model.pesototal(lista)

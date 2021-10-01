@@ -68,7 +68,7 @@ def orgartistasCro(catalog, inicial, final):
     return (artistas, totalArtistas)
 
 def ordenarArtistas(artistas):
-    ordenada= ordenarlista(artistas, ordenar)
+    ordenada= ordenarlista(artistas)
     return ordenada
 
 def primeros3(ordenada):
@@ -90,7 +90,7 @@ def compararIDayo(catalog, id):
 def orgObrasCro(catalog, inicial, final):
     obras =lt.newList()
     conteoObras = 0
-    for obra in lt.iterator(catalog['Artwoks']):        
+    for obra in lt.iterator(catalog['Artworks']):        
         if obra['DateAcquired']>= inicial and obra['DateAcquired']<= final:
             conteoObras += 1
             informacion= lt.newList()
@@ -125,7 +125,8 @@ def numPurchase(catalog):
 
 def enconID(catalog, nombre):
     i=0
-    f=len(catalog['Artists']-1)
+    f=len(catalog['Artists'])
+    f-=1
     pos=-1
     id= False
     while i <= f and id == False:
@@ -250,7 +251,7 @@ def lista_nacionalidades(nacioNombre: dict):
                     nacionalidad_mas_repetida = key
                     top10+= 1
                     lst_top10_final = lt.addLast(lst_nacio_ord,nacionalidad_mas_repetida)
-    return lst_top10_final
+                return lst_top10_final
     
 
 #Requerimiento 5 

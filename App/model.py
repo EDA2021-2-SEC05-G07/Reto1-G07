@@ -356,8 +356,8 @@ def obrasMasAntiguas(listaOrdenada, catalog, lista):
         lt.addLast(masAntiguas, info)
     return masAntiguas 
 
-def obrasMasCost(listaOrdenadaprecios, catalog, lista):
-    x= lt.subList(listaOrdenadaprecios, (lt.size(listaOrdenadaprecios))-4, 5)
+def obrasMasCost(listaOrdenadaprecios2, catalog, lista):
+    x= lt.subList(listaOrdenadaprecios2, (lt.size(listaOrdenadaprecios2))-4, 5)
     masCost= lt.newList()
     for obra in lt.iterator(x):
         info= lt.newList()

@@ -21,6 +21,7 @@
  """
 
 from App.controller import getprimeros3
+from App.model import listafechas, listaprecios
 import config as cf
 import sys
 import controller
@@ -86,29 +87,50 @@ while True:
     elif int(inputs[0]) == 3:
         inicial= input('Ingrese la fecha inicial del rango: ')
         final= input('Ingrese la fecha final del rango: ')
-        print('Número total de obras en el rango cronológico: ')
-        print('Número total de obras adquiridas por compra (“purchase…”)')
-        print('Primeras 3 obras del rango')
-        print('últimas 3 obras del rango)
+        obras = controller.getorgObrasCro(catalog, inicial, final)
+        print('Número total de obras en el rango cronológico: ')+ str(obras[1])
+        obras_purchase = controller.getnumPurchase(catalog)
+        print('Número total de obras adquiridas por compra "purchase"') +str(obras_purchase)
+        ordenada= controller.getordenarObras(obras[0])
+        print('Primeras 3 obras del rango') + str(controller.getprimeros3(ordenada))
+        print('últimas 3 obras del rango') + str(controller.getultimos3(ordenada))
+
     elif int(inputs[0]) == 4:
         nombre=input('Ingrese el nombre de un artista: ')
-        print('Total de obras')
-        print('Total técnicas utilizadas')
-        print('La técnica mas utilizada')
-        print('El listado de las obras de dicha técnica')
+        obras= controller.gettecnicasartista(catalog, controller.encontrarid)
+        print('Total de obras: ')+ str(obras[0])
+        tecnicas= controller.getcantidadtecnicas(tecnicas)
+        print('Total técnicas utilizadas: ') +str(tecnicas)
+        tecni_mas_usada= controller.gettecnimasusada(tecnicas)
+        print('La técnica mas utilizada es: ') +str(tecni_mas_usada)
+        lista = controller.getlistaObras(catalog, tecni_mas_usada, tecnicas)
+        print('El listado de las obras de dicha técnica: ') + lista
+
     elif int(inputs[0]) == 5:
-        print('Lista de nacionalidades ordenadas por el total de obras de mayor a menor (TOP 10).')
-        print('Información de las obras de la nacionalidad con el mayor numero de obras')
+        nacioNombre = controller.getcontNacio(catalog, nacioNombre)
+        lista = controller.getlista_nacionalidades(nacioNombre)
+        print('Lista de nacionalidades ordenadas por el total de obras de mayor a menor (TOP 10).' + lista)
+        top10= controller.getTop10(nacioNombre)
+        info_obras= controller.getnacioMasObras(top10, catalog)
+        print('Información de las obras de la nacionalidad con el mayor numero de obras') + info_obras
 
     elif int(inputs[0]) == 6:
-        print('Total de obras para transportar')
-        print('Estimado en USD del precio del servicio')
-        print('Peso estimado de las obras')
-        print('Las 5 obras mas antiguas a transportar')
-        print('Las 5 obras mas costosas para transportar')
+        total_obras= controller.getcantidadObras(lista)
+        print('Total de obras para transportar: ') + str(total_obras)
+        costoObras = controller.getdictCostos(lista)
+        estimado = controller.getcostoEstimado(costoObras)
+        print('Estimado en USD del precio del servicio: ') + str(estimado)
+        peso_estimado = controller.getpesototal(lista)
+        print('Peso estimado de las obras: ') + str(peso_estimado)
+        listafechas= controller.getlistafechas(lista)
+        listaOrdenada= controller.getordenarlista(listafechas)
+        obras_antiguas = controller.getobrasMasAntiguas(listaOrdenada, catalog, lista)
+        print('Las 5 obras mas antiguas a transportar: ') + obras_antiguas
+        listaprecios = controller.getlistaprecios(costoObras)
+        listaOrdenadaprecios = controller.getordenarlista2(listaprecios)
+        obras_costosas = controller.getobrasMasCost(listaOrdenadaprecios, catalog, lista)
+        print('Las 5 obras mas costosas para transportar: ') + obras_costosas
     
-        pass
-
     else:
         sys.exit(0)
 sys.exit(0)

@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from App.model import listaprecios
 import config as cf
 import model
 import csv
@@ -70,8 +71,8 @@ def getorgartistascro(catalog, inicial, final):
     artistas= model.orgartistasCro(catalog,inicial,final)
     return artistas
 
-inicial1= 
-final1=
+inicial1= int(input('Escriba la fecha inicial: '))
+final1=int(input('Escriba la fecha final: '))
 tupla1= getorgartistascro(catalog, inicial1, final1)
 artistas= tupla1[0]
 
@@ -97,8 +98,8 @@ def getorgObrasCro(catalog, inicial, final):
     tupla= model.orgObrasCro(catalog, inicial, final)
     return tupla
 
-inicial2=
-final2=
+inicial2=int(input('Escriba la fecha inicial: '))
+final2=int(input('Escriba la fecha final: '))
 tupla2= getorgObrasCro(catalog, inicial2, final2)
 obras= tupla2[0]
 
@@ -114,7 +115,7 @@ def getenconID(catalog, nombre):
     encontrarid= model.enconID(catalog, nombre)
     return encontrarid
 
-nombre1=
+nombre1=input('Escriba el nombre del artista: ')
 encontrarid=getenconID(catalog, nombre1)
 
 def gettecnicasartista(catalog, encontrarid):
@@ -140,15 +141,24 @@ def getlistaObras(catalog, masusada, tecnicas):
 def getidArtists(catalog):
     id=model.idArtists(catalog)
     return id
+
+id=getidArtists(catalog)
+
 def getidyNacio(catalog, id):
     nacioNombre= model.idyNacio(catalog, id)
     return nacioNombre
+
+nacioNombre=getidyNacio(catalog, id)
+
 def getcontNacio(catalog, nacioNombre: dict):
     nacioNombre= model.contNacio(catalog, nacioNombre)
     return nacioNombre
 def getTop10(nacioNombre: dict):
     top10= model.Top10(nacioNombre)
     return top10
+
+top10=getTop10(nacioNombre)
+
 def getnacioMasObras(top10, catalog):
     obrasNa= model.nacioMasObras(top10, catalog)
     return obrasNa
@@ -159,48 +169,64 @@ def getlista_nacionalidades(nacioNombre: dict):
 def getobrasDepartamento(departamento, catalog):
     lista= model.obrasDepartamento(departamento, catalog)
     return lista
+
+departamento=input('Escriba el departamento: ')
+lista= getobrasDepartamento(departamento, catalog)
+
 def getlistafechas(lista):
     listafechas= model.listafechas(lista)
     return listafechas
+
+listafechas= getlistafechas(lista)
+
 def getordenar(o1,o2):
     orden=model.ordenar(o1,o2)
     return orden
 def getordenarlista(listafechas):
     listaordenada=model.ordenarlista(listafechas)
     return listaordenada
-def getlistaprecios(costoObras:dict):
+
+listaordenada= getordenarlista(listafechas)
+
+def getdictCostos(lista):
+    costoObras= model.dictCostos(lista)
+    return costoObras
+
+costoObras=getdictCostos(lista)
+
+def getlistaprecios(costoObras):
     listaprecios= model.listaprecios(costoObras)
     return listaprecios
+
+listaprecios= getlistaprecios(costoObras)
+
 def getordenar(o1,o2):
     orden2= model.ordenar2(o1,o2)
     return orden2
 def getordenarlista(listafechas):
     listaOrdenadaprecios2= model.ordenarlista(listafechas)
     return listaOrdenadaprecios2
-def getlistaprecios(costoObras:dict):
-    listaprecios= model.listaprecios(costoObras)
-    return listaprecios
 def getordenar2(o1,o2):
     resultado= model.ordenar2(o1,o2)
     return resultado
 def getordenarlista2(listaprecios):
     listaOrdenadaprecios2= model.ordenarlista2(listaprecios)
     return listaOrdenadaprecios2
+
+listaOrdenadaprecios2=getordenarlista2(listaprecios)
+
 def getpesototal(lista):
     peso= model.pesototal(lista)
     return peso
 def getcantidadObras(lista):
     totalObras= model.cantidadObras(lista)
     return totalObras
-def getdictCostos(lista):
-    costoObras= model.dictCostos(lista)
-    return costoObras
 def getcostoEstimado(costoObras):
     suma= model.costoEstimado(costoObras)
     return suma
 def getobrasMasAntiguas(listaOrdenada, catalog, lista):
     masAntiguas= model.obrasMasAntiguas(listaOrdenada, catalog, lista)
     return masAntiguas
-def getobrasMasCost(listaOrdenadaprecios, catalog, lista):
-    masCost= model.obrasMasCost(listaOrdenadaprecios, catalog, lista)
+def getobrasMasCost(listaOrdenadaprecios2, catalog, lista):
+    masCost= model.obrasMasCost(listaOrdenadaprecios2, catalog, lista)
     return masCost
